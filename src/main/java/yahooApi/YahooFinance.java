@@ -2,10 +2,12 @@ package yahooApi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import yahooApi.beans.Asset;
 import yahooApi.beans.YahooResponse;
 
 import javax.json.*;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -78,7 +80,7 @@ public class YahooFinance {
         ObjectMapper objectMapper = new ObjectMapper();
         YahooResponse result = null;
         try {
-             result  = objectMapper.readValue(jsonResponse, YahooResponse.class);
+            result = objectMapper.readValue(jsonResponse, YahooResponse.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
