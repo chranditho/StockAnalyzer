@@ -18,10 +18,9 @@ import java.util.Map;
 
 public class YahooFinance {
 
-    public static final String URL_YAHOO = "https://query1.finance.yahoo.com/v7/finance/quote?symbols=%s";
+    public static final String URL_YAHOO = "https://queryasdf1.financeasdf.yahoo.asdf/v7/finance/quote?asdfasdfasymbols=%s";
 
     public String requestData(List<String> tickers) {
-        //TODO improve Error Handling
         String symbols = String.join(",", tickers);
         String query = String.format(URL_YAHOO, symbols);
         System.out.println(query);

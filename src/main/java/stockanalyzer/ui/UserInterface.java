@@ -31,7 +31,7 @@ public class UserInterface {
         ctrl.process(readLine());
     }
 
-
+    //link to repo: https://github.com/chranditho/StockAnalyzer
     public void start() {
         Menu<Runnable> menu = new Menu<>("User Interface");
         menu.setTitel("Wählen Sie aus:");
