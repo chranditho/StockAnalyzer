@@ -38,8 +38,8 @@ public class UserInterface {
         menu.insert("a", "Apple Amazon Alibaba", this::getDataFromCtrl1);
         menu.insert("b", "Amazon", this::getDataFromCtrl2);
         menu.insert("c", "Alibaba", this::getDataFromCtrl3);
-        menu.insert("d", "Choice User Input:", this::getDataForCustomInput);
-        menu.insert("z", "Choice incorrect Ticket:", this::getDataFromCtrl4);
+        menu.insert("d", "User Input:", this::getDataForCustomInput);
+        menu.insert("z", "Incorrect Ticker:", this::getDataFromCtrl4);
         menu.insert("q", "Quit", null);
         Runnable choice;
         while ((choice = menu.exec()) != null) {

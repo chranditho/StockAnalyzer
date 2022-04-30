@@ -29,7 +29,7 @@ public class YahooFinance {
         try {
             obj = new URL(query);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            System.err.println(e);
         }
         HttpURLConnection con = null;
         StringBuilder response = new StringBuilder();
@@ -42,7 +42,7 @@ public class YahooFinance {
             }
             in.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e);
         }
         return response.toString();
     }
@@ -82,7 +82,7 @@ public class YahooFinance {
         try {
             result = objectMapper.readValue(jsonResponse, YahooResponse.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            System.err.println(e);
         }
         return result;
     }
