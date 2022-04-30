@@ -36,7 +36,7 @@ public class Controller {
 
             System.out.println("highest bid price: " + highestBidPrice);
             System.out.println("average bid price: " + averageBidPrice);
-            System.out.println("bid price count: " + bidPriceCount);
+            System.out.println("bid count: " + bidPriceCount);
         } catch (YahooFinanceException yfe) {
             System.out.println(yfe);
         }
