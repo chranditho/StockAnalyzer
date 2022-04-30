@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import yahooApi.YahooFinance;
+import yahooApi.YahooFinanceException;
 import yahooApi.beans.QuoteResponse;
 import yahooApi.beans.Result;
 
@@ -13,28 +14,31 @@ public class Controller {
         System.out.println("Start process");
         QuoteResponse quoteResponse = (QuoteResponse) getData(ticker);
         try {
-            double highestBidPrice = quoteResponse
-                    .getResult()
-                    .stream()
-                    .mapToDouble(Result::getBid)
-                    .max().orElseThrow(() -> new Exception("Could not find highest bid price"));
-            double averageBidPrice = quoteResponse
-                    .getResult()
-                    .stream()
-                    .mapToDouble(Result::getBid)
-                    .average().orElseThrow(() -> new Exception("Could not find average bid price"));
             double bidPriceCount = quoteResponse
                     .getResult()
                     .stream()
                     .mapToDouble(Result::getBid)
                     .count();
 
+            if (bidPriceCount == 0) {
+                throw new YahooFinanceException("Ticker not found");
+            }
+            double highestBidPrice = quoteResponse
+                    .getResult()
+                    .stream()
+                    .mapToDouble(Result::getBid)
+                    .max().orElseThrow(() -> new YahooFinanceException("Could not find highest bid price"));
+            double averageBidPrice = quoteResponse
+                    .getResult()
+                    .stream()
+                    .mapToDouble(Result::getBid)
+                    .average().orElseThrow(() -> new YahooFinanceException("Could not find average bid price"));
+
             System.out.println("highest bid price: " + highestBidPrice);
             System.out.println("average bid price: " + averageBidPrice);
             System.out.println("bid price count: " + bidPriceCount);
-        } catch (Exception e) {
-            System.out.println("Error while fetching asset for symbol ");
-            System.out.println(e);
+        } catch (YahooFinanceException yfe) {
+            System.out.println(yfe);
         }
 
     }
