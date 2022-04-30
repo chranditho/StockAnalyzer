@@ -1,37 +1,49 @@
 package stockanalyzer.ctrl;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 import yahooApi.YahooFinance;
+import yahooApi.beans.QuoteResponse;
+import yahooApi.beans.Result;
 
 public class Controller {
 
     public void process(String ticker) {
         System.out.println("Start process");
-
-        //TODO implement Error handling
-        //TODO implement methods for
-        List<String> tickers = new ArrayList<>();
-        tickers.add(ticker);
-        YahooFinance yahooFinance = new YahooFinance();
+        QuoteResponse quoteResponse = (QuoteResponse) getData(ticker);
         try {
-            //1) Daten laden
-            var response = yahooFinance.requestData(tickers);
-            System.out.println(response);
-            //2) Daten Analyse
+            double highestBidPrice = quoteResponse
+                    .getResult()
+                    .stream()
+                    .mapToDouble(Result::getBid)
+                    .max().orElseThrow(() -> new Exception("Could not find highest bid price"));
+            double averageBidPrice = quoteResponse
+                    .getResult()
+                    .stream()
+                    .mapToDouble(Result::getBid)
+                    .average().orElseThrow(() -> new Exception("Could not find average bid price"));
+            double bidPriceCount = quoteResponse
+                    .getResult()
+                    .stream()
+                    .mapToDouble(Result::getBid)
+                    .count();
+
+            System.out.println("highest bid price: " + highestBidPrice);
+            System.out.println("average bid price: " + averageBidPrice);
+            System.out.println("bid price count: " + bidPriceCount);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error while fetching asset for symbol ");
+            System.out.println(e);
         }
 
     }
 
 
     public Object getData(String searchString) {
-
-
-        return null;
+        List<String> tickers = Arrays.asList(searchString.split(","));
+        YahooFinance yahooFinance = new YahooFinance();
+        return yahooFinance.getCurrentData(tickers).getQuoteResponse();
     }
 
 
