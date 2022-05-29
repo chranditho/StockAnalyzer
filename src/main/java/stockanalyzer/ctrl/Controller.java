@@ -3,6 +3,9 @@ package stockanalyzer.ctrl;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import downloader.Downloader;
 import downloader.SequentialDownloader;
 import yahooApi.YahooFinance;
 import yahooApi.YahooFinanceException;
@@ -55,4 +58,9 @@ public class Controller {
     public void closeConnection() {
 
     }
+
+    public void downloadTickers(List<String> ticker, Downloader downloader) throws YahooFinanceException, JsonProcessingException {
+        downloader.process(ticker);
+    }
+
 }

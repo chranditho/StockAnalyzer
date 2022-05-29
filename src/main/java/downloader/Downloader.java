@@ -17,12 +17,12 @@ public abstract class Downloader {
 
     public String saveJson2File(String ticker) {
         String fileName = "";
-        BufferedWriter writer= null;
+        BufferedWriter writer = null;
         try {
             YahooFinance yahooFinance = new YahooFinance();
             String json = yahooFinance.requestData(new ArrayList<>(Collections.singleton(ticker)));
 
-            fileName = DIRECTORY_DOWNLOAD +ticker + JSON_EXTENSION;
+            fileName = DIRECTORY_DOWNLOAD + ticker + JSON_EXTENSION;
 
             writer = new BufferedWriter(new FileWriter(fileName));
             writer.write(json);
