@@ -4,31 +4,65 @@ package stockanalyzer.ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
+import downloader.SequentialDownloader;
 import stockanalyzer.ctrl.Controller;
+import yahooApi.YahooFinanceException;
 
 public class UserInterface {
 
     private Controller ctrl = new Controller();
 
     public void getDataFromCtrl1() {
-        ctrl.process("AAPL,AMZN,BABA");
+        try {
+            ctrl.process("AAPL,AMZN,BABA");
+        } catch (YahooFinanceException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void getDataFromCtrl2() {
-        ctrl.process("AMZN");
+        try {
+            ctrl.process("AMZN");
+        } catch (YahooFinanceException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void getDataFromCtrl3() {
-        ctrl.process("BABA");
+        try {
+            ctrl.process("BABA");
+        } catch (YahooFinanceException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void getDataFromCtrl4() {
-        ctrl.process("loremipsum");
+        try {
+            ctrl.process("loremipsum");
+        } catch (YahooFinanceException e) {
+
+        }
     }
 
     public void getDataForCustomInput() {
-        ctrl.process(readLine());
+        try {
+            ctrl.process(readLine());
+        } catch (YahooFinanceException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void downloadTickers(){
+        SequentialDownloader sequentialDownloader = new SequentialDownloader();
+        ArrayList<String> tickers = new ArrayList();
+        tickers.add("AAPL");
+        tickers.add("AAPL");
+        tickers.add("BABA");
+        sequentialDownloader.process(tickers);
     }
 
     //link to repo: https://github.com/chranditho/StockAnalyzer
@@ -40,6 +74,7 @@ public class UserInterface {
         menu.insert("c", "Alibaba", this::getDataFromCtrl3);
         menu.insert("d", "User Input:", this::getDataForCustomInput);
         menu.insert("z", "Incorrect Ticker:", this::getDataFromCtrl4);
+        menu.insert("d", "Download Tickers:", this::downloadTickers);
         menu.insert("q", "Quit", null);
         Runnable choice;
         while ((choice = menu.exec()) != null) {
@@ -47,6 +82,9 @@ public class UserInterface {
         }
         ctrl.closeConnection();
         System.out.println("Program finished");
+    }
+
+    private void downLoadTickers() {
     }
 
 

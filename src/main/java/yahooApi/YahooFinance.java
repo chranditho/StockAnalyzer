@@ -74,14 +74,14 @@ public class YahooFinance {
         return returnName;
     }
 
-    public YahooResponse getCurrentData(List<String> tickers) {
+    public YahooResponse getCurrentData(List<String> tickers) throws YahooFinanceException {
         String jsonResponse = requestData(tickers);
         ObjectMapper objectMapper = new ObjectMapper();
         YahooResponse result = null;
         try {
             result = objectMapper.readValue(jsonResponse, YahooResponse.class);
         } catch (JsonProcessingException e) {
-            System.err.println(e);
+            throw new YahooFinanceException(e.getMessage());
         }
         return result;
     }

@@ -3,6 +3,7 @@ package stockanalyzer.ctrl;
 import java.util.Arrays;
 import java.util.List;
 
+import downloader.SequentialDownloader;
 import yahooApi.YahooFinance;
 import yahooApi.YahooFinanceException;
 import yahooApi.beans.QuoteResponse;
@@ -10,7 +11,7 @@ import yahooApi.beans.Result;
 
 public class Controller {
 
-    public void process(String ticker) {
+    public void process(String ticker) throws YahooFinanceException {
         System.out.println("Start process");
         QuoteResponse quoteResponse = (QuoteResponse) getData(ticker);
         try {
@@ -44,7 +45,7 @@ public class Controller {
     }
 
 
-    public Object getData(String searchString) {
+    public Object getData(String searchString) throws YahooFinanceException {
         List<String> tickers = Arrays.asList(searchString.split(","));
         YahooFinance yahooFinance = new YahooFinance();
         return yahooFinance.getCurrentData(tickers).getQuoteResponse();
